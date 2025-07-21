@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Silktension | TSTB</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-image: url('https://wallpaperswide.com/download/stone_edge-wallpaper-2160x2160.jpg');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      color: #e0e0e0;
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; /* changed from absolute to fixed */
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      z-index: -1;
+    }
+
+    .profile-img {
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+      position: relative;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    }
+
+    .profile-img:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .profile-img::after {
+      content: '';
+      position: absolute;
+      top: -4px;
+      left: -4px;
+      right: -4px;
+      bottom: -4px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      animation: pulseBorder 3s infinite;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .profile-img:hover::after {
+      opacity: 1;
+    }
+
+    @keyframes pulseBorder {
+      0% { transform: scale(1); border-color: rgba(255, 255, 255, 0.3); }
+      50% { transform: scale(1.01); border-color: rgba(255, 255, 255, 0.15); }
+      100% { transform: scale(1); border-color: rgba(255, 255, 255, 0.3); }
+    }
+
+    .audio-player {
+      backdrop-filter: blur(2px);
+    }
+
+    .glow-text {
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: white;
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+
+    .nav-link {
+      position: relative;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 1px;
+      bottom: 0;
+      left: 0;
+      background-color: #ffffff;
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .skip-btn {
+      transition: all 0.2s ease;
+    }
+
+    .skip-btn:hover {
+      transform: scale(1.2);
+      color: #ffffff;
+    }
+
+    .play-btn {
+      transition: all 0.2s ease;
+    }
+
+    .play-btn:hover {
+      transform: scale(1.1);
+    }
+
+    @keyframes fadeSlideUp {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fadeSlideUp {
+      animation: fadeSlideUp 1s ease-out forwards;
+    }
+
+    @media (max-width: 768px) {
+      .content-container {
+        flex-direction: column;
+      }
+
+      .profile-section {
+        margin-bottom: 2rem;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+  <div class="container mx-auto px-4 h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 rounded-full px-8 py-3 border border-white/10 backdrop-blur-xl bg-white/5 transition-all duration-300 shadow-[inset_0_0_0.5px_rgba(255,255,255,0.15)]">
+      <div class="flex items-center justify-center space-x-12">
+        <nav class="hidden md:flex space-x-6">
+          <a href="#home" class="nav-link text-white font-light tracking-wider">HOME</a>
+          <a href="#contact" class="nav-link text-white font-light tracking-wider">CONTACT</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content centered vertically -->
+    <main id="home" class="flex flex-col md:flex-row items-center justify-center gap-20 h-[calc(100vh-3.5rem)] transition-all duration-500 ease-in-out">
+      
+      <!-- Profile Section -->
+      <div class="profile-section flex flex-col items-center md:items-start w-full md:w-[22rem] mb-12 md:mb-0">
+        <img src="https://i.postimg.cc/qBS9PJNg/Silktension-Photoroom-Photoroom-1-Photoroom.png" alt="Artist Profile" class="profile-img w-64 h-64 rounded-full object-cover mb-8">
+        <h2 class="text-2xl font-light text-white mb-2">Silktension</h2>
+        <p class="text-gray-300 font-light tracking-wider mb-6">MUSIC PRODUCER</p>
+        <p class="text-gray-400 text-center md:text-left max-w-md leading-relaxed">
+          I make music driven by emotion-textured sound, tense beauty, all straight from the moment I’m in.
+        </p>
+      </div>
+
+      <!-- Audio Player Section -->
+      <div class="audio-player w-full md:w-[30rem]">
+        <div class="flex flex-col items-center relative">
+          <h3 class="text-3xl font-light text-white mb-2 tracking-wider">COMING SOON</h3>
+          <p class="text-gray-400 mb-8 text-sm tracking-wider">UNRELEASED</p>
+
+          <div class="w-full max-w-md relative">
+            <div class="flex justify-center items-center mb-8">
+              <button class="skip-btn text-gray-400 hover:text-white mx-4 text-lg transition-all duration-200" onclick="audioPlayer.prevTrack()">
+                <i class="fas fa-step-backward"></i>
+              </button>
+
+              <button class="play-btn mx-4 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-all duration-200">
+                <i class="fas fa-play text-white text-lg play-icon"></i>
+                <i class="fas fa-pause text-white text-lg pause-icon hidden"></i>
+              </button>
+
+              <button class="skip-btn text-gray-400 hover:text-white mx-4 text-lg transition-all duration-200" onclick="audioPlayer.nextTrack()">
+                <i class="fas fa-step-forward"></i>
+              </button>
+            </div>
+
+            <div class="relative mb-8">
+              <div class="progress-container w-full h-[2px] bg-white/20 rounded-full cursor-pointer">
+                <div class="progress-bar h-full bg-white rounded-full" style="width: 0%"></div>
+              </div>
+              <div class="flex justify-between text-xs text-white/60 mt-2">
+                <span class="current-time">0:00</span>
+                <span class="duration">0:00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Contact Section -->
+    <section id="contact" class="min-h-screen flex items-center justify-center px-4 py-20 transition-all duration-500 ease-in-out opacity-0 translate-y-4 absolute top-0 left-0 right-0 pointer-events-none">
+      <div class="max-w-2xl w-full">
+        <h2 class="text-3xl font-light text-white mb-8 text-center tracking-wider">CONTACT ME</h2>
+        <form class="space-y-6" id="contact-form">
+          <input type="hidden" name="time" id="form-time" />
+
+          <div>
+            <label for="name" class="block text-gray-300 mb-2">Name</label>
+            <input type="text" id="name" name="name" required
+              class="w-full px-4 py-2 bg-white/10 border border-white/20 rounded focus:outline-none focus:border-white/50 text-white">
+          </div>
+          <div>
+            <label for="email" class="block text-gray-300 mb-2">Email</label>
+            <input type="email" id="email" name="email" required
+              class="w-full px-4 py-2 bg-white/10 border border-white/20 rounded focus:outline-none focus:border-white/50 text-white">
+          </div>
+          <div>
+            <label for="message" class="block text-gray-300 mb-2">Message</label>
+            <textarea id="message" name="message" rows="5" required
+              class="w-full px-4 py-2 bg-white/10 border border-white/20 rounded focus:outline-none focus:border-white/50 text-white"></textarea>
+          </div>
+          <button type="submit"
+            class="w-full py-3 bg-white/10 border border-white/20 rounded text-white hover:bg-white/20 transition duration-300">
+            SEND MESSAGE
+          </button>
+        </form>
+
+        <!-- Thank You Message -->
+        <div id="success-message"
+          class="hidden mt-6 p-4 bg-green-500/20 border border-green-500/30 rounded text-green-300 text-center transition-opacity duration-500 ease-in-out opacity-0">
+          Thank you, love — your message has been sent 💌
+        </div>
+      </div>
+    </section>
+  </div>
+
+    <!-- Footer (fixed + moved outside contact section) -->
+    <footer class="fixed bottom-0 left-0 right-0 py-4 text-center text-gray-400 text-sm backdrop-blur-sm z-50">
+      <p class="mb-2">© 2025 A New Beginning.</p>
+      <div class="flex justify-center space-x-4">
+        <a href="https://soundcloud.com/silktension" target="_blank" rel="noopener noreferrer" class="hover:text-white">
+        <i class="fab fa-soundcloud"></i>
+        </a>
+        <a href="mailto:silktension@hotmail.com" target="_blank" rel="noopener noreferrer" class="hover:text-white">
+        <i class="fas fa-envelope"></i>
+        </a>
+      </div>
+    </footer>
+
+  <script>
+    const audioPlayer = {
+      tracks: [
+        {
+          title: "A quick Taste",
+          date: "Abrupt Change - kopia",
+          duration: "1:54",
+          audioSrc: "https://r2.guns.lol/ec681dfe-b452-4db1-b9b8-ec23e4fcbdba.mp3" // Replace with actual URL
+        },
+        {
+          title: "A quick Taste",
+          date: "it's like magic",
+          duration: "0:48",
+          audioSrc: "https://r2.guns.lol/8f89425e-a4f9-445f-891e-9b1454d5cb96.mp3" // Replace with actual URL
+        },
+        {
+          title: "A quick Taste",
+          date: "my loss",
+          duration: "0:48",
+          audioSrc: "https://r2.guns.lol/8f89425e-a4f9-445f-891e-9b1454d5cb96.mp3" // Replace with actual URL
+        }
+      ],
+      currentTrackIndex: 0,
+      isPlaying: false,
+      audioElement: null,
+
+      init() {
+        this.audioElement = new Audio();
+        this.updateTrack();
+        document.querySelector('.play-btn').addEventListener('click', () => this.togglePlay());
+        
+        // Progress bar click handler
+        document.querySelector('.progress-container').addEventListener('click', (e) => {
+          const rect = e.target.getBoundingClientRect();
+          const pos = (e.clientX - rect.left) / rect.width;
+          this.audioElement.currentTime = pos * this.audioElement.duration;
+        });
+
+        this.audioElement.addEventListener('timeupdate', () => this.updateProgressBar());
+        this.audioElement.addEventListener('loadedmetadata', () => this.updateProgressBar());
+        this.audioElement.addEventListener('ended', () => this.nextTrack());
+      },
+
+      togglePlay() {
+        const playIcon = document.querySelector('.play-icon');
+        const pauseIcon = document.querySelector('.pause-icon');
+        if (this.isPlaying) {
+          this.audioElement.pause();
+          playIcon.classList.remove('hidden');
+          pauseIcon.classList.add('hidden');
+        } else {
+          this.audioElement.play();
+          playIcon.classList.add('hidden');
+          pauseIcon.classList.remove('hidden');
+        }
+        this.isPlaying = !this.isPlaying;
+      },
+
+      nextTrack() {
+        this.currentTrackIndex = (this.currentTrackIndex + 1) % this.tracks.length;
+        this.updateTrack();
+      },
+
+      prevTrack() {
+        this.currentTrackIndex = (this.currentTrackIndex - 1 + this.tracks.length) % this.tracks.length;
+        this.updateTrack();
+      },
+
+      updateTrack() {
+        this.audioElement.src = this.tracks[this.currentTrackIndex].audioSrc;
+        this.audioElement.load();
+        this.audioElement.addEventListener('canplay', () => {
+          if (this.isPlaying) {
+            this.audioElement.play();
+          } else {
+            document.querySelector('.play-icon').classList.remove('hidden');
+            document.querySelector('.pause-icon').classList.add('hidden');
+          }
+        });
+        this.audioElement.addEventListener('error', () => {
+          console.error('Error loading audio');
+        });
+        this.updateTrackInfo();
+      },
+
+      updateTrackInfo() {
+        const track = this.tracks[this.currentTrackIndex];
+        document.querySelector('.audio-player h3').textContent = track.title.toUpperCase();
+        document.querySelector('.audio-player p').textContent = track.date;
+        
+        // Reset progress bar when changing tracks
+        document.querySelector('.progress-bar').style.width = '0%';
+        document.querySelector('.current-time').textContent = '0:00';
+      },
+
+      updateProgressBar() {
+        if (this.audioElement.duration) {
+          const progress = (this.audioElement.currentTime / this.audioElement.duration) * 100;
+          document.querySelector('.progress-bar').style.width = `${progress}%`;
+          document.querySelector('.current-time').textContent = 
+            this.formatTime(this.audioElement.currentTime);
+          document.querySelector('.duration').textContent = 
+            this.formatTime(this.audioElement.duration);
+        }
+      },
+
+      formatTime(seconds) {
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+      }
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      audioPlayer.init();
+      
+      // Initialize EmailJS
+      (function() {
+        emailjs.init('L19gN0Ae2YaDE0aeD');
+      })();
+
+      // Handle contact form submission
+    const contactForm = document.querySelector('#contact-form');
+    const timeInput = document.getElementById('form-time');
+    const successMessage = document.getElementById('success-message');
+
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      // Set the current time dynamically
+      timeInput.value = new Date().toLocaleString();
+
+      emailjs.sendForm('service_05c3i8c', 'template_wk0rrsc', this)
+        .then(() => {
+          // Reset the form
+          contactForm.reset();
+
+          // Show the thank you message
+          successMessage.classList.remove('hidden');
+          setTimeout(() => successMessage.classList.add('opacity-100'), 10);
+
+          // Hide after 5 seconds
+          setTimeout(() => {
+            successMessage.classList.remove('opacity-100');
+            setTimeout(() => successMessage.classList.add('hidden'), 500);
+          }, 5000);
+        }, (error) => {
+          console.error('Email sending failed:', error);
+          alert('Failed to send message. Please try again later.');
+        });
+    });
+      
+      contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        emailjs.sendForm('service_05c3i8c', 'template_wk0rrsc', this)
+          .then(() => {
+            // Show success message
+            successMessage.classList.remove('hidden');
+            // Reset form
+            contactForm.reset();
+            // Hide message after 5 seconds
+            setTimeout(() => {
+              successMessage.classList.add('hidden');
+            }, 5000);
+          }, (error) => {
+            console.error('Failed to send message:', error);
+            alert('Failed to send message. Please try again later.');
+          });
+      });
+      
+      // Handle navigation between sections
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('href');
+          const targetSection = document.querySelector(targetId);
+          const mainSection = document.querySelector('main');
+          
+          if (targetId === '#home') {
+            document.querySelector('#contact').classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
+            document.querySelector('#contact').classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+            mainSection.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
+            mainSection.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+          } else if (targetId === '#contact') {
+            mainSection.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
+            mainSection.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+            document.querySelector('#contact').classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
+            document.querySelector('#contact').classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
