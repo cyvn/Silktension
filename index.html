@@ -379,7 +379,7 @@
       
       // Initialize EmailJS
       (function() {
-        emailjs.init('L19gN0Ae2YaDE0aeD');
+        emailjs.init('xUYpQIxn7RRQhgT7Q');
       })();
 
       // Handle contact form submission
@@ -393,7 +393,7 @@
       // Set the current time dynamically
       timeInput.value = new Date().toLocaleString();
 
-      emailjs.sendForm('service_05c3i8c', 'template_wk0rrsc', this)
+      emailjs.sendForm('service_gf3uuye', 'template_bw6yjnz', this)
         .then(() => {
           // Reset the form
           contactForm.reset();
@@ -416,7 +416,7 @@
       contactForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
-        emailjs.sendForm('service_05c3i8c', 'template_wk0rrsc', this)
+        emailjs.sendForm('service_gf3uuye', 'template_bw6yjnz', this)
           .then(() => {
             // Show success message
             successMessage.classList.remove('hidden');
